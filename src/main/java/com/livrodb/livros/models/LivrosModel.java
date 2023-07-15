@@ -2,12 +2,9 @@ package com.livrodb.livros.models;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.annotation.Generated;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "tb_livros")
@@ -16,9 +13,20 @@ public class LivrosModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long idLivro;
     private String nome;
-    private String autor;
     private String ano;
 
+    public AutoresModel getAutor() {
+        return autor;
+    }
+
+    public void setAutor(AutoresModel autor) {
+        this.autor = autor;
+    }
+    //Anotação para evitar loop infinito, este indica que é o filho
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "autor_id", nullable = false)
+    private AutoresModel autor;
 
 
 
@@ -30,15 +38,6 @@ public class LivrosModel {
         this.nome = nome;
     }
 
-
-    public String getAutor() {
-        return autor;
-    }
-
-
-    public void setAutor(String autor) {
-        this.autor = autor;
-    }
 
 
     public String getAno() {
