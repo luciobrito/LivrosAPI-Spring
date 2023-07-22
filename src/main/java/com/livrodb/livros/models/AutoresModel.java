@@ -1,5 +1,6 @@
 package com.livrodb.livros.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -24,9 +25,11 @@ public class AutoresModel {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "autor")
     private Set<LivrosModel> livros;
 
+    @JsonIgnore
     @CreationTimestamp
     private OffsetDateTime createdOn;
     
+    @JsonIgnore
     @UpdateTimestamp
     private OffsetDateTime updatedOn;
 

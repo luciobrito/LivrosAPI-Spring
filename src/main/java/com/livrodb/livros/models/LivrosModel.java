@@ -1,14 +1,12 @@
 package com.livrodb.livros.models;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.annotation.Generated;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,15 +19,17 @@ public class LivrosModel {
     private String ano;
     //Anotação para evitar loop infinito, este indica que é o filho
     @JsonBackReference
-    @ManyToOne
-    @JoinColumn(name = "autor_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "autor_id", referencedColumnName = "autor_id", nullable = false)
     private AutoresModel autor;
 
+    @JsonIgnore
     @CreationTimestamp
-    private LocalDateTime createdOn;
+    private OffsetDateTime createdOn;
 
+    @JsonIgnore
     @UpdateTimestamp
-    private LocalDateTime updatedOn;
+    private OffsetDateTime updatedOn;
 
 
     public AutoresModel getAutor() {
@@ -67,19 +67,19 @@ public class LivrosModel {
         this.idLivro = idLivro;
     }
 
-    public LocalDateTime getCreatedOn() {
+    public OffsetDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDateTime createdOn) {
+    public void setCreatedOn(OffsetDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
-    public LocalDateTime getUpdatedOn() {
+    public OffsetDateTime getUpdatedOn() {
         return updatedOn;
     }
 
-    public void setUpdatedOn(LocalDateTime updatedOn) {
+    public void setUpdatedOn(OffsetDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
 
