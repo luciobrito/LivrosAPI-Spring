@@ -1,6 +1,7 @@
 package com.livrodb.livros.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -16,14 +17,14 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class AutoresModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="autor_id")
+    @Column(name="id")
     private Long id;
     private String nome;
 
     //Anotação para evitar loop infinito, esta indica que este é o pai
-    @JsonManagedReference
+    @JsonIgnoreProperties("autor")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "autor")
-    private Set<LivrosModel> livros;
+    public Set<LivrosModel> livros;
 
     @JsonIgnore
     @CreationTimestamp

@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
@@ -17,10 +18,12 @@ public class LivrosModel {
     public Long idLivro;
     private String nome;
     private String ano;
-    //Anotação para evitar loop infinito, este indica que é o filho
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "autor_id", referencedColumnName = "autor_id", nullable = false)
+
+    //Anotação para evitar loop infinito
+    //Ignora a propriedade livros na serialização
+    @JsonIgnoreProperties("livros")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "autor_id", referencedColumnName = "id", nullable = false)
     private AutoresModel autor;
 
     @JsonIgnore
@@ -82,5 +85,6 @@ public class LivrosModel {
     public void setUpdatedOn(OffsetDateTime updatedOn) {
         this.updatedOn = updatedOn;
     }
+
 
 }
