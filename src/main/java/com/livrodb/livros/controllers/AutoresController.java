@@ -1,20 +1,20 @@
 package com.livrodb.livros.controllers;
 
 import com.livrodb.livros.dtos.AutoresDto;
+import com.livrodb.livros.dtos.LivrosDto;
 import com.livrodb.livros.models.AutoresModel;
 
+import com.livrodb.livros.models.LivrosModel;
 import com.livrodb.livros.repository.AutoresRepo;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class AutoresController {
@@ -30,5 +30,25 @@ public class AutoresController {
     @GetMapping("/autor")
     public ResponseEntity<List<AutoresModel>> getAllAutores(){
         return ResponseEntity.status(HttpStatus.OK).body(autRepo.findAll());
+    }
+    @PutMapping("/autor/{id}")
+    public ResponseEntity<Object> updateAutor(@PathVariable(value ="id") Long id,
+                                               @RequestBody @Valid AutoresDto autoresDto){
+        Optional<AutoresModel> autoresO = autRepo.findById(id);
+        if(autoresO.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado.");
+        }
+        var autoresModel = autoresO.get();
+        BeanUtils.copyProperties(autoresDto, autoresModel);
+        return ResponseEntity.status(HttpStatus.OK).body(autRepo.save(autoresModel));
+    }
+    @DeleteMapping("/autor/{id}")
+    public ResponseEntity<Object> delAutores(@PathVariable(value="id") Long id){
+        Optional<AutoresModel> autoresO = autRepo.findById(id);
+        if(autoresO.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado.");
+        }
+        autRepo.delete(autoresO.get());
+        return ResponseEntity.status(HttpStatus.OK).body(autoresO.get());
     }
 }

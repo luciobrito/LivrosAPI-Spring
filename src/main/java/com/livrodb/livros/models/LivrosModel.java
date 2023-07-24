@@ -16,7 +16,8 @@ public class LivrosModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long idLivro;
-    private String nome;
+
+    private String titulo;
     private String ano;
 
     //Anotação para evitar loop infinito
@@ -26,15 +27,23 @@ public class LivrosModel {
     @JoinColumn(name = "autor_id", referencedColumnName = "id", nullable = false)
     private AutoresModel autor;
 
-    @JsonIgnore
+
     @CreationTimestamp
     private OffsetDateTime createdOn;
 
-    @JsonIgnore
+
     @UpdateTimestamp
     private OffsetDateTime updatedOn;
 
 
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
     public AutoresModel getAutor() {
         return autor;
     }
@@ -44,14 +53,6 @@ public class LivrosModel {
     }
 
 
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
 
     public String getAno() {
         return ano;

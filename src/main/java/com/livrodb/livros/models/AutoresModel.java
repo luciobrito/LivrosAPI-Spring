@@ -21,21 +21,31 @@ public class AutoresModel {
     private Long id;
     private String nome;
 
-    //Anotação para evitar loop infinito, esta indica que este é o pai
+    private String nacionalidade;
+
+    //Anotação para evitar loop infinito, ignora a propriedade "autor" na serialização
     @JsonIgnoreProperties("autor")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "autor")
     public Set<LivrosModel> livros;
 
-    @JsonIgnore
+
     @CreationTimestamp
     private OffsetDateTime createdOn;
     
-    @JsonIgnore
+
     @UpdateTimestamp
     private OffsetDateTime updatedOn;
 
 
     //Getters e Setters
+
+    public String getNacionalidade() {
+        return nacionalidade;
+    }
+
+    public void setNacionalidade(String nacionalidade) {
+        this.nacionalidade = nacionalidade;
+    }
     public Long getId() {
         return id;
     }
