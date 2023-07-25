@@ -28,6 +28,11 @@ public class LivrosModel {
     private AutoresModel autor;
 
 
+
+    @Column(columnDefinition = "TEXT")
+    private String descricao;
+
+
     @CreationTimestamp
     private OffsetDateTime createdOn;
 
@@ -37,6 +42,14 @@ public class LivrosModel {
 
 
 
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
     public String getTitulo() {
         return titulo;
     }

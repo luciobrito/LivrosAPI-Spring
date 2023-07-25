@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+import lombok.Cleanup;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -28,6 +29,9 @@ public class AutoresModel {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "autor")
     public Set<LivrosModel> livros;
 
+
+    @Column(columnDefinition = "TEXT")
+    private String descricao;
 
     @CreationTimestamp
     private OffsetDateTime createdOn;
@@ -87,6 +91,14 @@ public class AutoresModel {
 
     public void setUpdatedOn(OffsetDateTime updatedOn) {
         this.updatedOn = updatedOn;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }
