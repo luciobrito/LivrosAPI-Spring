@@ -31,6 +31,14 @@ public class AutoresController {
     public ResponseEntity<List<AutoresModel>> getAllAutores(){
         return ResponseEntity.status(HttpStatus.OK).body(autRepo.findAll());
     }
+    @GetMapping("/autor/{id}")
+    public ResponseEntity<Object> getOneAutor(@PathVariable(value="id") Long id){
+        Optional<AutoresModel> autoresO = autRepo.findById(id);
+        if(autoresO.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Autor não encontrado.");
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(autoresO.get());
+    }
     @PutMapping("/autor/{id}")
     public ResponseEntity<Object> updateAutor(@PathVariable(value ="id") Long id,
                                                @RequestBody @Valid AutoresDto autoresDto){
