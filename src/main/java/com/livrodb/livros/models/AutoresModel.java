@@ -41,6 +41,9 @@ public class AutoresModel {
     private OffsetDateTime updatedOn;
 
 
+
+    private String linkImagem;
+
     //Getters e Setters
 
     public String getNacionalidade() {
@@ -99,6 +102,13 @@ public class AutoresModel {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+    public String getLinkImagem() {
+        return linkImagem;
+    }
+
+    public void setLinkImagem(String linkImagem) {
+        this.linkImagem = linkImagem;
     }
 
 }

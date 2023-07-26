@@ -6,5 +6,6 @@ import jakarta.validation.constraints.NotBlank;
 public record AutoresDto (@NotBlank String nome,
                           LivrosModel livros,
                           String nacionalidade,
-                          String descricao){
+                          String descricao,
+                          String linkImagem){
 }

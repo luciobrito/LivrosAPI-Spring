@@ -29,6 +29,8 @@ public class LivrosModel {
 
 
 
+    private String linkImagem;
+
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
@@ -100,5 +102,12 @@ public class LivrosModel {
         this.updatedOn = updatedOn;
     }
 
+    public String getLinkImagem() {
+        return linkImagem;
+    }
+
+    public void setLinkImagem(String linkImagem) {
+        this.linkImagem = linkImagem;
+    }
 
 }
