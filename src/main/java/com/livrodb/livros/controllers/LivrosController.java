@@ -1,6 +1,5 @@
 package com.livrodb.livros.controllers;
 
-import com.livrodb.livros.LivrosApplication;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import com.livrodb.livros.models.LivrosModel;
 import com.livrodb.livros.repository.LivrosRepo;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.UUID;
 @RestController
 public class LivrosController {
     @Autowired
@@ -29,7 +28,7 @@ public class LivrosController {
         return ResponseEntity.status(HttpStatus.OK).body(livrosRepo.findAll());
     }
     @GetMapping("/livros/{id}")
-    public ResponseEntity<Object> getOneLivros(@PathVariable(value="id") Long id){
+    public ResponseEntity<Object> getOneLivros(@PathVariable(value="id") UUID id){
         Optional<LivrosModel> livrosO = livrosRepo.findById(id);
         if(livrosO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado.");
@@ -37,7 +36,7 @@ public class LivrosController {
         return ResponseEntity.status(HttpStatus.OK).body(livrosO.get());
     }
     @PutMapping("/livros/{id}")
-    public ResponseEntity<Object> updateLivros(@PathVariable(value ="id") Long id,
+    public ResponseEntity<Object> updateLivros(@PathVariable(value ="id") UUID id,
                                                @RequestBody @Valid LivrosDto livrosDto){
         Optional<LivrosModel> livrosO = livrosRepo.findById(id);
         if(livrosO.isEmpty()){
@@ -48,7 +47,7 @@ public class LivrosController {
         return ResponseEntity.status(HttpStatus.OK).body(livrosRepo.save(livrosModel));
     }
     @DeleteMapping("/livros/{id}")
-    public ResponseEntity<Object> delLivros(@PathVariable(value="id") Long id){
+    public ResponseEntity<Object> delLivros(@PathVariable(value="id") UUID id){
         Optional<LivrosModel> livrosO = livrosRepo.findById(id);
         if(livrosO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado.");

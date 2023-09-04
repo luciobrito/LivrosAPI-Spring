@@ -1,11 +1,10 @@
 package com.livrodb.livros.models;
 
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
@@ -15,7 +14,7 @@ import jakarta.persistence.*;
 public class LivrosModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long idLivro;
+    public UUID idLivro;
 
     private String titulo;
     private String ano;
@@ -77,12 +76,12 @@ public class LivrosModel {
         this.ano = ano;
     }
 
-    public Long getIdLivro() {
+    public UUID getIdLivro() {
         return idLivro;
     }
 
 
-    public void setIdLivro(Long idLivro) {
+    public void setIdLivro(UUID idLivro) {
         this.idLivro = idLivro;
     }
 

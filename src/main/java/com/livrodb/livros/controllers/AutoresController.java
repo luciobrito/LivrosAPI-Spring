@@ -1,10 +1,8 @@
 package com.livrodb.livros.controllers;
 
 import com.livrodb.livros.dtos.AutoresDto;
-import com.livrodb.livros.dtos.LivrosDto;
 import com.livrodb.livros.models.AutoresModel;
 
-import com.livrodb.livros.models.LivrosModel;
 import com.livrodb.livros.repository.AutoresRepo;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 public class AutoresController {
@@ -32,7 +31,7 @@ public class AutoresController {
         return ResponseEntity.status(HttpStatus.OK).body(autRepo.findAll());
     }
     @GetMapping("/autor/{id}")
-    public ResponseEntity<Object> getOneAutor(@PathVariable(value="id") Long id){
+    public ResponseEntity<Object> getOneAutor(@PathVariable(value="id") UUID id){
         Optional<AutoresModel> autoresO = autRepo.findById(id);
         if(autoresO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Autor não encontrado.");
@@ -40,7 +39,7 @@ public class AutoresController {
         return ResponseEntity.status(HttpStatus.OK).body(autoresO.get());
     }
     @PutMapping("/autor/{id}")
-    public ResponseEntity<Object> updateAutor(@PathVariable(value ="id") Long id,
+    public ResponseEntity<Object> updateAutor(@PathVariable(value ="id") UUID id,
                                                @RequestBody @Valid AutoresDto autoresDto){
         Optional<AutoresModel> autoresO = autRepo.findById(id);
         if(autoresO.isEmpty()){
@@ -51,7 +50,7 @@ public class AutoresController {
         return ResponseEntity.status(HttpStatus.OK).body(autRepo.save(autoresModel));
     }
     @DeleteMapping("/autor/{id}")
-    public ResponseEntity<Object> delAutores(@PathVariable(value="id") Long id){
+    public ResponseEntity<Object> delAutores(@PathVariable(value="id") UUID id){
         Optional<AutoresModel> autoresO = autRepo.findById(id);
         if(autoresO.isEmpty()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Não encontrado.");
